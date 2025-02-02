@@ -1,3 +1,4 @@
+import ast
 import os
 from dotenv import load_dotenv
 
@@ -8,7 +9,8 @@ class Config:
   HOST = os.getenv("APP_HOST", "0.0.0.0")
   PORT = int(os.getenv("APP_PORT", "8080"))
   WEBHOOK_HOST = os.getenv("WEBHOOK_HOST")
-  WEBHOOK_PATH = os.getenv("WEBHOOK_PATH", "/webhook")
+  WEBHOOK_PATH = os.getenv("WEBHOOK_PATH")
   WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+  WHITE_LIST = list(map(int, os.getenv("ALLOWED_USER_IDS", "").split(',')))
   
 config = Config()

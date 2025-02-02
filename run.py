@@ -6,11 +6,14 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 from app.core.config import config
 from app.commands.set_commands import set_commands
+from app.handlers.handlers import router
 
 logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=config.BOT_TOKEN)
 dp = Dispatcher()
+
+dp.include_router(router)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
