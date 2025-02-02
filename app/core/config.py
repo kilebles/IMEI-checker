@@ -12,5 +12,6 @@ class Config:
   WEBHOOK_PATH = os.getenv("WEBHOOK_PATH")
   WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
   WHITE_LIST = list(map(int, os.getenv("ALLOWED_USER_IDS", "").split(',')))
+  API_SANDBOX_TOKEN = os.getenv("API_AUTH_TOKEN")
   
 config = Config()
