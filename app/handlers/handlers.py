@@ -6,14 +6,8 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from app.core.config import config
 from app.utils.API import check_imei
-import logging
 
 router = Router()
-
-logging.basicConfig(
-    level=logging.DEBUG,  # Включаем подробные логи
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
 
 def is_valid_imei(imei: str) -> bool:
   return bool(re.fullmatch(r"\d{15}", imei))
@@ -45,14 +39,8 @@ async def imei_handler(message: Message):
     await error_message.delete()
     return
   
-  await message.answer(f"Проверяю IMEI: {imei}...")
+  waiting_message = await message.answer("⏳")
+  result_text = await check_imei(imei)
   
-  result = await check_imei(imei)
-  
-  result_text = json.dumps(
-    result, 
-    ensure_ascii=False, 
-    indent=2
-  )
-  
-  await message.answer(f"Результат проверки:\n{result_text}")
+  await waiting_message.delete()
+  await message.answer(result_text)
